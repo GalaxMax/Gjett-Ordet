@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gjett ordet</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+<div class="bg">
+<div class="container">
+    <p class="liv1"><3</p>
+    <p class="liv2"><3</p>
+    <p class="liv3"><3</p>
+    <p class="liv4"><3</p>
+    <p class="liv5"><3</p>
+    <div class="container">
+        <label for="bokstaver">Gjett en bokstav:</label>
+        <input class="gjetting" type="text" name="bokstaver" id="bokstaver" placeholder="A">
+        <button>Gjett</button>
+    </div>
+</div>
+<div class="containerPink">
+    <div id="losninger">
+        <h1 id="losning1">_</h1>
+        <h1 id="losning2">_</h1>
+        <h1 id="losning3">_</h1>
+        <h1 id="losning4">_</h1>
+        <h1 id="losning5">_</h1>
+        <h1 id="losning6">_</h1>
+        <p>Husk at alle forsøk må være i stor forbokstav!</p>
+    </div>
+    <p id="antallGjettet"></p>
+    <p id="sortertListe"></p>
+    </div>
+</div>
+</body>
+<script> //Lager plassering for de riktige bokstavene//
+let losning1El = document.querySelector("#losning1");
+let losning2El = document.querySelector("#losning2");
+let losning3El = document.querySelector("#losning3");
+let losning4El = document.querySelector("#losning4");
+let losning5El = document.querySelector("#losning5");
+let losning6El = document.querySelector("#losning6");
+
+//Lager Array og variabel//
+let bokstaverEl = document.querySelector("#bokstaver");
+let knappEl = document.querySelector("button");
+let antallGjettetEl = document.querySelector("#antallGjettet");
+let sortertListeEl = document.querySelector("#sortertListe");
+let hemmeligOrd = ["B", "E", "R", "G", "E", "N"]; //Velg ett 6 bokstav ord//
+let gjettedeBokstaver = [];
+let riktigeBokstaver = [];
+
+//Lagrer hvor mange forsøk(liv)//
+let liv = ["1", "2", "3", "4", "5"];
+let element1 = document.getElementsByClassName('liv1');
+let element2 = document.getElementsByClassName('liv2');
+let element3 = document.getElementsByClassName('liv3');
+let element4 = document.getElementsByClassName('liv4');
+let element5 = document.getElementsByClassName('liv5');
+
+//Event listener//
+knappEl.addEventListener("click", check);
+
+//Funksjon når knappen blir trykket//
+function check() {
+    bokstaver = bokstaverEl.value
+    gjettedeBokstaver.unshift(bokstaver)
+
+    for (let i = 0; i < hemmeligOrd.length; i++) { //Lagrer riktige gjettede bokstaver//
+        if (bokstaver == hemmeligOrd[i]) {
+            riktigeBokstaver.unshift(bokstaver)
+        }
+    }
+
+    //Sjekker om du har riktig eller feil//
+    if (hemmeligOrd.indexOf(bokstaver) !== -1) {
+        }
+
+    else
+        if (liv.length !== 0) {     //Tar bort ett liv vis du har feil//
+
+            if (liv.length == 1) {
+                for (let j = 0; j < element5.length; j++) {
+                    let element5 = document.getElementsByClassName('liv5');
+                    element5[j].style.backgroundColor = "red";
+                }
+                liv.pop()
+                alert("Game Over! Bra spilt, men du er tom for liv")
+            }
+            if (liv.length == 2) {
+                for (let j = 0; j < element4.length; j++) {
+                    let element4 = document.getElementsByClassName('liv4');
+                    element4[j].style.backgroundColor = "red";
+                }
+                liv.pop()
+            }
+            if (liv.length == 3) {
+                for (let j = 0; j < element3.length; j++) {
+                    let element3 = document.getElementsByClassName('liv3');
+                    element3[j].style.backgroundColor = "red";
+                }
+                liv.pop()
+            }
+            if (liv.length == 4) {
+                for (let j = 0; j < element2.length; j++) {
+                    let element2 = document.getElementsByClassName('liv2');
+                    element2[j].style.backgroundColor = "red";
+                }
+                liv.pop()
+            }
+            if (liv.length == 5) {
+                for (let j = 0; j < element1.length; j++) {
+                    let element1 = document.getElementsByClassName('liv1');
+                    element1[j].style.backgroundColor = "red";
+                }
+                liv.pop()
+            }
+        }
+
+        //Forteller hvilke gjettet riktig//
+    if (riktigeBokstaver.includes(hemmeligOrd[0])){
+        losning1El.innerHTML = hemmeligOrd[0]
+    }
+    if (riktigeBokstaver.includes(hemmeligOrd[1])){
+        losning2El.innerHTML = hemmeligOrd[1]
+    }
+    if (riktigeBokstaver.includes(hemmeligOrd[2])){
+        losning3El.innerHTML = hemmeligOrd[2]
+    }
+    if (riktigeBokstaver.includes(hemmeligOrd[3])){
+        losning4El.innerHTML = hemmeligOrd[3]
+    }
+    if (riktigeBokstaver.includes(hemmeligOrd[4])){
+        losning5El.innerHTML = hemmeligOrd[4]
+    }
+    if (riktigeBokstaver.includes(hemmeligOrd[5])){
+        losning6El.innerHTML = hemmeligOrd[5]
+    }
+
+    //Viser diverse info på nettsiden//
+    antallGjettetEl.innerHTML = 'Du har gjettet ' + gjettedeBokstaver.length + ' bokstav(er).'
+    gjettedeBokstaver.sort()
+    sortertListeEl.innerHTML = 'Alle du har gjettet så langt: ' + gjettedeBokstaver
+
+    if (riktigeBokstaver.length == hemmeligOrd.length){
+        alert('Gratulerer! Du har vunnet!')
+    }
+}
+</script>
+</html>
